@@ -19,7 +19,7 @@
 # Paramater 7 is where the version of the application is listed but it's not used. It's more
 # a visual help in the Policy.
 
-# Command Line Arguments
+	# Command Line Arguments
 # myApp=${1}
 # myChecksum=${2}
 # myTrigger=${3}
