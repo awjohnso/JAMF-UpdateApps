@@ -54,7 +54,7 @@ if [[ -e ${myApp} ]]; then
  
 		# Check the checksum of the software installed and if it's not what is in the parameter
 		# then update the software.  
-	existingChecksum=$( /usr/bin/openssl md5 ${myApp} | /usr/bin/awk   -F '= '  '{print $2}' )
+	existingChecksum=$( /usr/bin/openssl md5 ${myApp} | /usr/bin/awk -F '= '  '{print $2}' )
 	if [[ ${existingChecksum} != ${myChecksum} ]]; then
 		/bin/echo "${myApp} is not the correct version. Trying to replace it..."
 		/bin/echo "$( /bin/date | /usr/bin/awk '{print $1, $2, $3, $4}' ) $( /usr/sbin/scutil --get LocalHostName ) $( /usr/bin/basename ${0} )[$$]: ${myApp} is not the correct version. Trying to replace it..." >> /var/log/jamf.log
