@@ -42,6 +42,9 @@ re='^[0-9]+$'
 
 	# If the application is present on the computer, proceed.
 if [[ -e ${myApp} ]]; then
+	/bin/echo "${myApp} is installed...."
+	/bin/echo "$( /bin/date | /usr/bin/awk '{print $1, $2, $3, $4}' ) $( /usr/sbin/scutil --get LocalHostName ) $( /usr/bin/basename ${0} )[$$]: ${myApp}  is installed..." >> /var/log/jamf.log
+
 		# If the application on the computer is newer than the one that is being installed,
 		# then do nothing.
 	existingEpoch=$(/usr/bin/stat -f "%m" "${myApp}" )
@@ -60,9 +63,9 @@ if [[ -e ${myApp} ]]; then
 		/bin/echo "$( /bin/date | /usr/bin/awk '{print $1, $2, $3, $4}' ) $( /usr/sbin/scutil --get LocalHostName ) $( /usr/bin/basename ${0} )[$$]: ${myApp} is not the correct version. Trying to replace it..." >> /var/log/jamf.log
 			# Run the Jamf Policy to install the updated app, via a trigger or policy ID.
 		if [[ ${myTrigger} =~ ${re} ]]; then
-			/usr/local/bin/jamf policy -trigger ${myTrigger}
-		else
 			/usr/local/bin/jamf policy -id ${myTrigger}
+		else
+			/usr/local/bin/jamf policy -trigger ${myTrigger}
 		fi
 	else
 		/bin/echo "${myApp} is at the correct version. No need to replace."
